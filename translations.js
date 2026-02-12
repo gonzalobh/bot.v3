@@ -1793,6 +1793,23 @@
       }
       addTextNode(node, key);
     }
+    const i18nElements = [];
+    if (root.nodeType === Node.ELEMENT_NODE && root.hasAttribute('data-i18n')) {
+      i18nElements.push(root);
+    }
+    if (root.querySelectorAll) {
+      i18nElements.push(...root.querySelectorAll('[data-i18n]'));
+    }
+    i18nElements.forEach(el => {
+      const key = normalize(el.getAttribute('data-i18n'));
+      if (!key) return;
+      let textNode = Array.from(el.childNodes).find(child => child.nodeType === Node.TEXT_NODE);
+      if (!textNode) {
+        textNode = document.createTextNode('');
+        el.appendChild(textNode);
+      }
+      addTextNode(textNode, key, { manual: true });
+    });
     ['placeholder', 'title', 'aria-label', 'alt'].forEach(attr => {
       root.querySelectorAll(`[${attr}]`).forEach(el => {
         const storedKey = getStoredAttrKey(el, attr);

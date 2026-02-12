@@ -6159,16 +6159,13 @@ if (btn) {
   btn.textContent = t('saveButton');
   registerTranslationTarget(btn, 'saveButton');
 }
-const addTextLabel = $('addKnowledgeTextLabel');
-if (addTextLabel) {
-  addTextLabel.textContent = t('knowledge.addText');
-  registerTranslationTarget(addTextLabel, 'knowledge.addText');
-}
-const addPageLabel = $('addKnowledgePageLabel');
-if (addPageLabel) {
-  addPageLabel.textContent = t('knowledge.addWebsite');
-  registerTranslationTarget(addPageLabel, 'knowledge.addWebsite');
-}
+const bindKnowledgeChipLabel = (labelEl, key) => {
+if (!labelEl || !key) return;
+labelEl.textContent = t(key);
+registerTranslationTarget(labelEl, key);
+};
+bindKnowledgeChipLabel($('addKnowledgeTextLabel'), 'knowledge.addText');
+bindKnowledgeChipLabel($('addKnowledgePageLabel'), 'knowledge.addWebsite');
 const modalError = $('knowledgeModalError');
 const modalStatus = $('knowledgeModalStatus');
 const deleteModal = $('knowledgeDeleteModal');
