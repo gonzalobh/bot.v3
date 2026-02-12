@@ -6296,6 +6296,40 @@ btnTab.type = 'button';
 btnTab.dataset.id = page.id;
 btnTab.className = 'page-btn';
 if (isActive) btnTab.classList.add('active');
+const deleteTabBtn = document.createElement('button');
+deleteTabBtn.type = 'button';
+deleteTabBtn.className = 'page-btn-delete';
+deleteTabBtn.setAttribute('aria-label', t('Delete knowledge page'));
+deleteTabBtn.title = t('Delete knowledge page');
+deleteTabBtn.disabled = !canWriteFlag;
+const deleteIconEl = document.createElement('i');
+deleteIconEl.dataset.lucide = 'trash-2';
+deleteIconEl.className = 'page-btn-delete-icon';
+deleteTabBtn.append(deleteIconEl);
+deleteTabBtn.addEventListener('click', (event) => {
+event.stopPropagation();
+canWrite(async () => {
+const index = pages.findIndex((p) => p.id === page.id);
+if (index === -1) return;
+const wasActive = currentPageId === page.id;
+pages.splice(index, 1);
+if (!pages.length) {
+pages.push(buildPage({ title: t('Page 1'), content: '' }, 0));
+}
+let nextId = currentPageId;
+if (wasActive) {
+const fallbackIndex = Math.min(index, pages.length - 1);
+nextId = pages[fallbackIndex]?.id || pages[0]?.id || '';
+}
+if (!pages.some((p) => p.id === nextId)) {
+nextId = pages[0]?.id || '';
+}
+setActivePage(nextId);
+await savePages(false);
+toast(t('✔ Knowledge page deleted'));
+});
+});
+btnTab.append(deleteTabBtn);
 const iconEl = document.createElement('i');
 iconEl.dataset.lucide = 'file-text';
 iconEl.className = 'page-btn-icon';

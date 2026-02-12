@@ -1,5 +1,6 @@
 /* === Knowledge page buttons === */
 .page-btn {
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -43,6 +44,35 @@
   color: #111111;
   box-shadow: 0 12px 30px rgba(17, 17, 17, 0.15);
 }
+
+.page-btn .page-btn-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #9ca3af;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.page-btn .page-btn-delete:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+.page-btn .page-btn-delete:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.page-btn .page-btn-delete .page-btn-delete-icon {
+  width: 14px;
+  height: 14px;
+}
+
 #saveContext {
   background-color: #000000;
   color: #ffffff;
