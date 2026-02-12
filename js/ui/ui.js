@@ -8857,6 +8857,7 @@ titleLabels: {},
 buttons: [],
 sourceLanguage: getCurrentBotBaseLanguage()
 };
+let isSavingEnabledState = false;
 const setMessage = (text = "") => {
 if (!messageEl) return;
 if (!text) {
@@ -8952,6 +8953,19 @@ buttonsList.appendChild(row);
 updateAddButtonState();
 renderPreview();
 };
+const persistEnabledState = async () => {
+if (isSavingEnabledState) return;
+isSavingEnabledState = true;
+try {
+await canWrite(async () => {
+await ref.child("enabled").set(!!state.enabled);
+});
+setMessage(t("✔ Changes saved"));
+toast(t("✔ Changes saved"));
+} finally {
+isSavingEnabledState = false;
+}
+};
 const persist = async () => {
 const panelLanguage = getCurrentContentLanguage();
 const sourceLanguage = getCurrentBotBaseLanguage();
@@ -9044,6 +9058,10 @@ renderButtons();
 });
 enabledToggle.addEventListener("change", () => {
 state.enabled = !!enabledToggle.checked;
+persistEnabledState().catch(error => {
+console.error("Error auto-saving first menu state", error);
+toast(t("⚠ Could not save"));
+});
 });
 buttonsList.addEventListener("input", (event) => {
 const target = event.target;
