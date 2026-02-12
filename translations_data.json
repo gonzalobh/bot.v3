@@ -963,9 +963,25 @@
     "key": "Add",
     "en": "Add",
     "fr": "Ajouter",
-    "es": "Añadir",
+    "es": "Agregar",
     "de": "Hinzufügen",
     "pt": "Adicionar"
+  },
+  {
+    "key": "knowledge.addWebsite",
+    "en": "+ Website",
+    "fr": "+ Page web",
+    "es": "+ Página web",
+    "de": "+ Webseite",
+    "pt": "+ Página web"
+  },
+  {
+    "key": "knowledge.addText",
+    "en": "+ Text",
+    "fr": "+ Texte",
+    "es": "+ Texto",
+    "de": "+ Text",
+    "pt": "+ Texto"
   },
   {
     "key": "Required",

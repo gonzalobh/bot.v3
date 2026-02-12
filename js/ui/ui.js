@@ -6145,6 +6145,7 @@ const txt = $('contextText');
 const btn = $('saveContext');
 const counter = $('ctxCounter');
 const tabsWrap = $('knowledgeTabs');
+const addTextBtn = $('addKnowledgeText');
 const addBtn = $('addKnowledgePage');
 const deleteBtn = $('deleteKnowledgePage');
 const urlMeta = $('knowledgeUrlMeta');
@@ -6157,6 +6158,16 @@ const modalInput = $('knowledgeUrlInput');
 if (btn) {
   btn.textContent = t('saveButton');
   registerTranslationTarget(btn, 'saveButton');
+}
+const addTextLabel = $('addKnowledgeTextLabel');
+if (addTextLabel) {
+  addTextLabel.textContent = t('knowledge.addText');
+  registerTranslationTarget(addTextLabel, 'knowledge.addText');
+}
+const addPageLabel = $('addKnowledgePageLabel');
+if (addPageLabel) {
+  addPageLabel.textContent = t('knowledge.addWebsite');
+  registerTranslationTarget(addPageLabel, 'knowledge.addWebsite');
 }
 const modalError = $('knowledgeModalError');
 const modalStatus = $('knowledgeModalStatus');
@@ -6401,6 +6412,23 @@ modalStatus.classList.remove('hidden');
 modalStatus.classList.add('hidden');
 }
 }
+addTextBtn?.addEventListener(
+'click',
+() =>
+canWrite(async () => {
+const newPage = buildPage(
+{
+title: `Page ${pages.length + 1}`,
+url: '',
+content: '',
+},
+pages.length
+);
+pages.push(newPage);
+await savePages(false);
+setActivePage(newPage.id);
+})
+);
 addBtn?.addEventListener('click', () => {
 if (!canWriteFlag) return;
 openModal();
@@ -6523,6 +6551,10 @@ const disabled = !canWriteFlag;
 if (addBtn) {
 addBtn.disabled = disabled;
 addBtn.classList.toggle('opacity-60', disabled);
+}
+if (addTextBtn) {
+addTextBtn.disabled = disabled;
+addTextBtn.classList.toggle('opacity-60', disabled);
 }
 updateDeleteButtonState();
 applyTextareaState();
