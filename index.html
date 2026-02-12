@@ -1018,11 +1018,21 @@
 
     <div class="flex flex-wrap items-center gap-2">
       <div id="knowledgeTabs" class="flex flex-wrap items-center gap-2"></div>
-      <button id="addKnowledgeText" class="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
-        <span id="addKnowledgeTextLabel">+ Texto</span>
+      <button id="addKnowledgeText" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
+        <span class="chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </span>
+        <span id="addKnowledgeTextLabel" class="chip-label" data-i18n="knowledge.addText"></span>
       </button>
-      <button id="addKnowledgePage" class="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
-        <span id="addKnowledgePageLabel">+ Página web</span>
+      <button id="addKnowledgePage" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
+        <span class="chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </span>
+        <span id="addKnowledgePageLabel" class="chip-label" data-i18n="knowledge.addWebsite"></span>
       </button>
     </div>
 

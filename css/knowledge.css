@@ -80,3 +80,25 @@
 #saveContext:hover {
   background-color: #111111;
 }
+
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.chip-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chip-label {
+  display: inline-block;
+}
