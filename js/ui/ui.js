@@ -6476,7 +6476,7 @@ document.execCommand(cmd, false, value);
 saveSelection();
 }
 
-document.querySelectorAll('.ke-toolbar button[data-cmd]').forEach((toolbarBtn) => {
+document.querySelectorAll('.ke-toolbar button').forEach((toolbarBtn) => {
 toolbarBtn.addEventListener('pointerdown', (e) => e.preventDefault());
 toolbarBtn.addEventListener('click', () => {
 const cmd = toolbarBtn.dataset.cmd;
