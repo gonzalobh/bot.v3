@@ -6155,7 +6155,6 @@ const modalClose = $('closeKnowledgeModal');
 const modalCancel = $('cancelKnowledgeModal');
 const modalConfirm = $('confirmAddKnowledge');
 const modalInput = $('knowledgeUrlInput');
-const clearFormatBtn = $('clearFormat');
 if (btn) {
   btn.textContent = t('saveButton');
   registerTranslationTarget(btn, 'saveButton');
@@ -6362,6 +6361,10 @@ urlMeta.classList.add('hidden');
 renderTabs();
 applyTextareaState();
 updateDeleteButtonState();
+if (window.lucide) {
+window.lucide.createIcons();
+}
+updateToolbarState();
 }
 function ensurePageExists() {
 if (pages.length === 0) {
@@ -6460,10 +6463,17 @@ sel.removeAllRanges();
 sel.addRange(savedRange);
 }
 
-txt.addEventListener('mouseup', saveSelection);
-txt.addEventListener('keyup', saveSelection);
+txt.addEventListener('mouseup', () => {
+saveSelection();
+updateToolbarState();
+});
+txt.addEventListener('keyup', () => {
+saveSelection();
+updateToolbarState();
+});
 document.addEventListener('selectionchange', () => {
 if (document.activeElement === txt) saveSelection();
+updateToolbarState();
 });
 
 function applyCommand(cmd, value = null) {
@@ -6474,6 +6484,7 @@ value = `<${value}>`;
 }
 document.execCommand(cmd, false, value);
 saveSelection();
+updateToolbarState();
 }
 
 function getSelectedBlockEl() {
@@ -6503,6 +6514,10 @@ function isHeading(el) {
 return !!el && /^H[1-6]$/.test(el.tagName);
 }
 
+function isListItem(el) {
+return !!el && ['UL', 'OL', 'LI'].includes(el.tagName);
+}
+
 function toggleFormatBlock(tagName) {
 const targetTag = String(tagName || '').toUpperCase();
 if (!targetTag) return;
@@ -6514,21 +6529,7 @@ return;
 applyCommand('formatBlock', tagName);
 }
 
-document.querySelectorAll('.ke-toolbar button').forEach((toolbarBtn) => {
-toolbarBtn.addEventListener('pointerdown', (e) => e.preventDefault());
-toolbarBtn.addEventListener('click', () => {
-const cmd = toolbarBtn.dataset.cmd;
-const value = toolbarBtn.dataset.value || null;
-if (!cmd) return;
-if (cmd === 'formatBlock' && value) {
-toggleFormatBlock(value);
-return;
-}
-applyCommand(cmd, value);
-});
-});
-
-clearFormatBtn?.addEventListener('click', () => {
+function clearCurrentFormat() {
 txt.focus();
 restoreSelection();
 document.execCommand('removeFormat', false, null);
@@ -6537,6 +6538,50 @@ if (block && isHeading(block)) {
 document.execCommand('formatBlock', false, '<p>');
 }
 saveSelection();
+updateToolbarState();
+}
+
+function runToolbarCommand(cmd) {
+if (!cmd) return;
+if (cmd === 'heading') {
+toggleFormatBlock('h3');
+return;
+}
+if (cmd === 'clear') {
+clearCurrentFormat();
+return;
+}
+if (cmd === 'bulletList') {
+applyCommand('insertUnorderedList');
+return;
+}
+applyCommand(cmd);
+}
+
+function updateToolbarState() {
+const toolbarButtons = document.querySelectorAll('.rt-toolbar .rt-btn');
+if (!toolbarButtons.length) return;
+const block = getSelectedBlockEl();
+const stateByCmd = {
+bold: document.queryCommandState('bold'),
+italic: document.queryCommandState('italic'),
+underline: document.queryCommandState('underline'),
+bulletList: document.queryCommandState('insertUnorderedList') || isListItem(block),
+heading: isHeading(block),
+clear: false,
+};
+toolbarButtons.forEach((toolbarBtn) => {
+const isActive = !!stateByCmd[toolbarBtn.dataset.cmd];
+toolbarBtn.classList.toggle('is-active', isActive);
+toolbarBtn.setAttribute('aria-pressed', String(isActive));
+});
+}
+
+document.querySelectorAll('.rt-toolbar .rt-btn').forEach((toolbarBtn) => {
+toolbarBtn.addEventListener('pointerdown', (e) => e.preventDefault());
+toolbarBtn.addEventListener('click', () => {
+runToolbarCommand(toolbarBtn.dataset.cmd || '');
+});
 });
 
 txt.addEventListener('paste', (e) => {
@@ -6544,6 +6589,11 @@ e.preventDefault();
 const plainText = (e.clipboardData || window.clipboardData).getData('text/plain');
 document.execCommand('insertText', false, plainText);
 });
+
+if (window.lucide) {
+window.lucide.createIcons();
+}
+updateToolbarState();
 
 addTextBtn?.addEventListener(
 'click',
