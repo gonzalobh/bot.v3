@@ -110,22 +110,76 @@
   background: #fff;
 }
 
-.ke-toolbar {
-  display: flex;
-  gap: 6px;
+.rt-toolbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  background:#fff;
   margin-bottom: 6px;
 }
 
-.ke-toolbar button {
-  border: 1px solid #e5e5e5;
-  background: #fff;
-  padding: 4px 8px;
-  font-size: 13px;
-  cursor: pointer;
+.rt-group{
+  display:flex;
+  gap:4px;
+  padding:4px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#f9fafb;
 }
 
-.ke-toolbar button:hover {
-  background: #f5f5f5;
+.rt-sep{
+  width:1px;
+  height:28px;
+  background:#e5e7eb;
+}
+
+.rt-btn{
+  width:36px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid transparent;
+  background:transparent;
+  border-radius:10px;
+  cursor:pointer;
+  color:#111827;              /* icono en negro */
+  transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+.rt-btn svg{
+  width:16px;
+  height:16px;
+}
+
+.rt-btn:hover{
+  background:#fff;
+  border-color:#d1d5db;
+}
+
+.rt-btn:active{
+  transform: translateY(1px);
+}
+
+.rt-btn:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(17,24,39,.15);
+}
+
+/* Activo (toggle ON) */
+.rt-btn.is-active,
+.rt-btn[aria-pressed="true"]{
+  background:#111827;
+  border-color:#111827;
+  color:#fff;                /* icono en blanco */
+}
+
+.rt-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
 .ke-area {

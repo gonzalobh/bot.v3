@@ -1042,13 +1042,36 @@
     </div>
 
     <div class="knowledge-editor">
-      <div class="ke-toolbar">
-        <button type="button" data-cmd="bold"><b>B</b></button>
-        <button type="button" data-cmd="italic"><i>I</i></button>
-        <button type="button" data-cmd="underline"><u>U</u></button>
-        <button type="button" data-cmd="insertUnorderedList">•</button>
-        <button type="button" data-cmd="formatBlock" data-value="h3">Título</button>
-        <button type="button" id="clearFormat">Limpiar</button>
+      <div class="rt-toolbar" role="toolbar" aria-label="Formato">
+        <div class="rt-group">
+          <button class="rt-btn" type="button" data-cmd="bold" aria-label="Negrita" title="Negrita" aria-pressed="false">
+            <i data-lucide="bold"></i>
+          </button>
+
+          <button class="rt-btn" type="button" data-cmd="italic" aria-label="Cursiva" title="Cursiva" aria-pressed="false">
+            <i data-lucide="italic"></i>
+          </button>
+
+          <button class="rt-btn" type="button" data-cmd="underline" aria-label="Subrayado" title="Subrayado" aria-pressed="false">
+            <i data-lucide="underline"></i>
+          </button>
+        </div>
+
+        <div class="rt-sep" aria-hidden="true"></div>
+
+        <div class="rt-group">
+          <button class="rt-btn" type="button" data-cmd="bulletList" aria-label="Lista con viñetas" title="Lista con viñetas" aria-pressed="false">
+            <i data-lucide="list"></i>
+          </button>
+
+          <button class="rt-btn" type="button" data-cmd="heading" aria-label="Encabezado" title="Encabezado" aria-pressed="false">
+            <i data-lucide="heading-2"></i>
+          </button>
+
+          <button class="rt-btn" type="button" data-cmd="clear" aria-label="Quitar formato" title="Quitar formato" aria-pressed="false">
+            <i data-lucide="eraser"></i>
+          </button>
+        </div>
       </div>
 
       <div id="contextText"
