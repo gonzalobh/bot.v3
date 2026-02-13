@@ -1008,33 +1008,38 @@
 <!-- KNOWLEDGE TAB -->
           <section id="tab-knowledge" class="hidden space-y-6 max-w-3xl">
   <div class="card p-5 space-y-4">
-    <div class="font-semibold flex items-center gap-2">
-      <i data-lucide="book-open" class="w-5 h-5"></i>
-      Knowledge
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="font-semibold flex items-center gap-2">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+        <span>Knowledge</span>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap justify-end shrink-0">
+        <button id="addKnowledgeText" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
+          <span class="chip-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+          <span id="addKnowledgeTextLabel" class="chip-label" data-i18n="knowledge.addText"></span>
+        </button>
+
+        <button id="addKnowledgePage" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
+          <span class="chip-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+          <span id="addKnowledgePageLabel" class="chip-label" data-i18n="knowledge.addWebsite"></span>
+        </button>
+      </div>
     </div>
+
     <p class="text-sm text-gray-500">
       Add the contextual information that helps the assistant understand your business, products, and brand tone. You can import pages from a URL and edit them here.
     </p>
 
-    <div class="flex flex-wrap items-center gap-2">
-      <div id="knowledgeTabs" class="flex flex-wrap items-center gap-2"></div>
-      <button id="addKnowledgeText" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
-        <span class="chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12h14" />
-          </svg>
-        </span>
-        <span id="addKnowledgeTextLabel" class="chip-label" data-i18n="knowledge.addText"></span>
-      </button>
-      <button id="addKnowledgePage" class="chip-btn px-3 py-1.5 text-sm bg-black text-white rounded-lg shadow-sm hover:bg-gray-900 transition">
-        <span class="chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12h14" />
-          </svg>
-        </span>
-        <span id="addKnowledgePageLabel" class="chip-label" data-i18n="knowledge.addWebsite"></span>
-      </button>
-    </div>
+    <div id="knowledgeTabs" class="flex flex-wrap items-center gap-2"></div>
 
     <div id="knowledgeUrlMeta" class="text-xs text-gray-500 hidden">
       <span class="font-medium">Source:</span>
