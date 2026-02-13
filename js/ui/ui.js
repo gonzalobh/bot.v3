@@ -6476,12 +6476,54 @@ document.execCommand(cmd, false, value);
 saveSelection();
 }
 
+function getSelectedBlockEl() {
+const sel = window.getSelection();
+if (!sel) return null;
+let node = sel.anchorNode;
+if (!node && sel.rangeCount > 0) {
+node = sel.getRangeAt(0).startContainer;
+}
+if (!node) return null;
+if (node.nodeType === Node.TEXT_NODE) {
+node = node.parentNode;
+}
+while (node && node !== txt) {
+if (
+node.nodeType === Node.ELEMENT_NODE
+&& /^(H[1-6]|P|DIV|LI|BLOCKQUOTE)$/.test(node.tagName)
+) {
+return node;
+}
+node = node.parentNode;
+}
+return null;
+}
+
+function isHeading(el) {
+return !!el && /^H[1-6]$/.test(el.tagName);
+}
+
+function toggleFormatBlock(tagName) {
+const targetTag = String(tagName || '').toUpperCase();
+if (!targetTag) return;
+const current = getSelectedBlockEl();
+if (current && current.tagName === targetTag) {
+applyCommand('formatBlock', 'p');
+return;
+}
+applyCommand('formatBlock', tagName);
+}
+
 document.querySelectorAll('.ke-toolbar button').forEach((toolbarBtn) => {
 toolbarBtn.addEventListener('pointerdown', (e) => e.preventDefault());
 toolbarBtn.addEventListener('click', () => {
 const cmd = toolbarBtn.dataset.cmd;
 const value = toolbarBtn.dataset.value || null;
 if (!cmd) return;
+if (cmd === 'formatBlock' && value) {
+toggleFormatBlock(value);
+return;
+}
 applyCommand(cmd, value);
 });
 });
@@ -6489,7 +6531,11 @@ applyCommand(cmd, value);
 clearFormatBtn?.addEventListener('click', () => {
 txt.focus();
 restoreSelection();
-document.execCommand('removeFormat');
+document.execCommand('removeFormat', false, null);
+const block = getSelectedBlockEl();
+if (block && isHeading(block)) {
+document.execCommand('formatBlock', false, '<p>');
+}
 saveSelection();
 });
 
