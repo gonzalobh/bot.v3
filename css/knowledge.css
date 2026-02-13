@@ -102,3 +102,41 @@
 .chip-label {
   display: inline-block;
 }
+
+.knowledge-editor {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 8px;
+  background: #fff;
+}
+
+.ke-toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.ke-toolbar button {
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ke-toolbar button:hover {
+  background: #f5f5f5;
+}
+
+.ke-area {
+  min-height: 160px;
+  padding: 10px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ke-area:empty:before {
+  content: attr(data-placeholder);
+  color: #999;
+}
