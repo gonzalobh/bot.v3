@@ -140,3 +140,32 @@
   content: attr(data-placeholder);
   color: #999;
 }
+
+/* === FIX: mostrar bullets y títulos dentro del editor (Tailwind preflight los neutraliza) === */
+.ke-area ul {
+  list-style: disc;
+  list-style-position: outside;
+  padding-left: 1.25rem;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.ke-area ol {
+  list-style: decimal;
+  list-style-position: outside;
+  padding-left: 1.25rem;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.ke-area li {
+  margin: 0.15rem 0;
+}
+
+.ke-area h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0.65rem 0 0.25rem;
+}
+
+.ke-area h3:first-child {
+  margin-top: 0;
+}
