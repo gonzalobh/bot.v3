@@ -6155,6 +6155,7 @@ const modalClose = $('closeKnowledgeModal');
 const modalCancel = $('cancelKnowledgeModal');
 const modalConfirm = $('confirmAddKnowledge');
 const modalInput = $('knowledgeUrlInput');
+const clearFormatBtn = $('clearFormat');
 if (btn) {
   btn.textContent = t('saveButton');
   registerTranslationTarget(btn, 'saveButton');
@@ -6266,7 +6267,7 @@ deleteBtn.classList.toggle('opacity-60', disabled);
 deleteBtn.classList.toggle('cursor-not-allowed', disabled);
 }
 function updateCounter() {
-const len = (txt.value || '').length;
+const len = (txt.innerHTML || '').length;
 counter.textContent = t('{count} / {limit} characters', { count: len, limit: LIMIT });
 registerTranslationTarget(counter, '{count} / {limit} characters', 'text', {
 vars: { count: len, limit: LIMIT }
@@ -6280,7 +6281,7 @@ updateDeleteButtonState();
 }
 function applyTextareaState() {
 const disabled = !currentPageId || !canWriteFlag;
-txt.disabled = disabled;
+txt.setAttribute('contenteditable', disabled ? 'false' : 'true');
 txt.classList.toggle('opacity-60', disabled);
 updateCounter();
 }
@@ -6347,9 +6348,7 @@ tabsWrap.classList.toggle('hidden', pages.length === 0);
 function setActivePage(id) {
 currentPageId = id || '';
 const page = pages.find((p) => p.id === currentPageId);
-txt.value = page?.content || '';
-txt.style.height = 'auto';
-txt.style.height = (txt.scrollHeight || 120) + 'px';
+txt.innerHTML = page?.content || '';
 if (page?.url) {
 urlLabel.textContent = page.url;
 urlLabel.setAttribute('title', page.url);
@@ -6443,6 +6442,27 @@ modalStatus.classList.remove('hidden');
 modalStatus.classList.add('hidden');
 }
 }
+
+document.querySelectorAll('.ke-toolbar button[data-cmd]').forEach((toolbarBtn) => {
+toolbarBtn.addEventListener('mousedown', (e) => e.preventDefault());
+toolbarBtn.addEventListener('click', () => {
+const cmd = toolbarBtn.dataset.cmd;
+const value = toolbarBtn.dataset.value || null;
+document.execCommand(cmd, false, value);
+txt.focus();
+});
+});
+
+clearFormatBtn?.addEventListener('click', () => {
+document.execCommand('removeFormat');
+});
+
+txt.addEventListener('paste', (e) => {
+e.preventDefault();
+const plainText = (e.clipboardData || window.clipboardData).getData('text/plain');
+document.execCommand('insertText', false, plainText);
+});
+
 addTextBtn?.addEventListener(
 'click',
 () =>
@@ -6562,9 +6582,7 @@ closeDeleteModal();
 txt.addEventListener('input', (e) => {
 const page = pages.find((p) => p.id === currentPageId);
 if (!page) return;
-page.content = e.target.value;
-e.target.style.height = 'auto';
-e.target.style.height = (e.target.scrollHeight || 120) + 'px';
+page.content = e.target.innerHTML;
 updateCounter();
 });
 btn.addEventListener('click', () =>
@@ -6572,7 +6590,7 @@ canWrite(async () => {
 if (btn.disabled) return;
 const page = pages.find((p) => p.id === currentPageId);
 if (page) {
-page.content = txt.value;
+page.content = txt.innerHTML;
 }
 await savePages(true);
 })
